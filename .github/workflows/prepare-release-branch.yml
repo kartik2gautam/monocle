@@ -9,13 +9,7 @@ on:
         description: "Branch for release"
         required: True
 jobs:
-  setup-git-config:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up Git configuration
-        run: |
-          git config --global user.email "kartikkg799@gmail.com"
-          git config --global user.name "kartik2gautam"
+
   prereqs:
     environment: GITHUB 
     runs-on: ubuntu-latest
@@ -103,10 +97,14 @@ jobs:
       - name: Create pull request against the release branch
         env:
           PRERELEASE_VERSION: ${{ github.event.inputs.prerelease_version }}
+          USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
+          USER_NAME: ${{ secrets.GIT_USER_NAME }}
           # not using secrets.GITHUB_TOKEN since pull requests from that token do not run workflows
         run: |
           message="Prepare release ${STABLE_VERSION}/${UNSTABLE_VERSION}"
-          branch="kartik2gautam/prepare-release-${STABLE_VERSION}-${UNSTABLE_VERSION}"
+          branch="monocle/prepare-release-${STABLE_VERSION}-${UNSTABLE_VERSION}"
+          git config --global user.email "kartikkg799@gmail.com"
+          git config --global user.name "kartik2gautam"
           git commit -a -m "$message"
           git push origin HEAD:$branch
           gh pr create --title "[$RELEASE_BRANCH_NAME] $message" \
@@ -183,12 +181,15 @@ jobs:
       - name: Create pull request against main
         env:
           PRERELEASE_VERSION: ${{ github.event.inputs.prerelease_version }}
-          # not using secrets.GITHUB_TOKEN since pull requests from that token do not run workflows
+          USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
+          USER_NAME: ${{ secrets.GIT_USER_NAME }}
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         run: |
           message="Update version to ${STABLE_NEXT_VERSION}/${UNSTABLE_NEXT_VERSION}"
           body="Update version to \${STABLE_NEXT_VERSION}/${UNSTABLE_NEXT_VERSION}\."
-          branch="kartik2gautam/update-version-to-${STABLE_NEXT_VERSION}-${UNSTABLE_NEXT_VERSION}"
+          branch="monocle/update-version-to-${STABLE_NEXT_VERSION}-${UNSTABLE_NEXT_VERSION}"
+          git config --global user.email "kartikkg799@gmail.com"
+          git config --global user.name "kartik2gautam"
           git commit -a -m "$message"
           git push origin HEAD:$branch
           gh pr create --title "$message" \
