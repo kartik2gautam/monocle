@@ -23,11 +23,6 @@ jobs:
       - name: Install toml
         run: pip install toml
 
-      - name: Set up Git configuration
-        run: |
-          git config --global user.email "kartikkg799@gmail.com"
-          git config --global user.name "kartik2gautam"
-
       - name: Verify prerequisites
         env:
           PRERELEASE_VERSION: ${{ github.event.inputs.prerelease_version }}
@@ -57,12 +52,10 @@ jobs:
     needs: prereqs
     steps:
       - uses: actions/checkout@v4
+
       - name: Install toml
         run: pip install toml
-      - name: Set up Git configuration
-        run: |
-          git config --global user.email "kartikkg799@gmail.com"
-          git config --global user.name "kartik2gautam"  
+
       - name: Create release branch
         env:
           PRERELEASE_VERSION: ${{ github.event.inputs.prerelease_version }}
@@ -114,6 +107,8 @@ jobs:
         run: |
           message="Prepare release ${STABLE_VERSION}/${UNSTABLE_VERSION}"
           branch="monocle/prepare-release-${STABLE_VERSION}-${UNSTABLE_VERSION}"
+          git config --global user.email "kartikkg799@gmail.com"
+          git config --global user.name "kartik2gautam"
           git commit -a -m "$message"
           git push origin HEAD:$branch
           gh pr create --title "[$RELEASE_BRANCH_NAME] $message" \
@@ -130,11 +125,6 @@ jobs:
 
       - name: Install toml
         run: pip install toml
-
-      - name: Set up Git configuration
-        run: |
-          git config --global user.email "kartikkg799@gmail.com"
-          git config --global user.name "kartik2gautam"
 
       - name: Set environment variables
         env:
@@ -201,6 +191,8 @@ jobs:
           message="Update version to ${STABLE_NEXT_VERSION}/${UNSTABLE_NEXT_VERSION}"
           body="Update version to \${STABLE_NEXT_VERSION}/${UNSTABLE_NEXT_VERSION}\."
           branch="monocle/update-version-to-${STABLE_NEXT_VERSION}-${UNSTABLE_NEXT_VERSION}"
+          git config --global user.email "kartikkg799@gmail.com"
+          git config --global user.name "kartik2gautam"
           git commit -a -m "$message"
           git push origin HEAD:$branch
           gh pr create --title "$message" \
