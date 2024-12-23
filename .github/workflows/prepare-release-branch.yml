@@ -1,4 +1,4 @@
-# 
+
 name: Prepare release branch
 on:
   workflow_dispatch:
@@ -30,6 +30,7 @@ jobs:
             echo the change log is missing an \"Unreleased\" section
             exit 1
           fi
+
           chmod +x ./.github/scripts/get-version.sh
           if [[ ! -z $PRERELEASE_VERSION ]]; then
             stable_version=$(./.github/scripts/get-version.sh)
@@ -58,7 +59,6 @@ jobs:
             stable_version=$PRERELEASE_VERSION
           fi
 
-
           if [[ $stable_version =~ ^([0-9]+)\.([0-9]+)\.0$ ]]; then
             stable_version_branch_part=$(echo $stable_version | sed -E 's/([0-9]+)\.([0-9]+)\.0/\1.\2.0/')
             release_branch_name="release/v${stable_version_branch_part}"
@@ -72,6 +72,7 @@ jobs:
           git push origin HEAD:$release_branch_name
 
           echo "STABLE_VERSION=$stable_version" >> $GITHUB_ENV
+
           echo "RELEASE_BRANCH_NAME=$release_branch_name" >> $GITHUB_ENV
 
       - name: Update the change log with the approximate release date
@@ -163,4 +164,6 @@ jobs:
           gh pr create --title "$message" \
                        --body "$body" \
                        --head $branch \
+
                        --base main
+

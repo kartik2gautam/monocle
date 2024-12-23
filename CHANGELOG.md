@@ -1,3 +1,4 @@
+
 ## Version 0.3.0b2 (2024-12-10)
 
 - Add dev dependency for Mistral AI integration ([#81](https://github.com/monocle2ai/monocle/pull/81))
@@ -11,6 +12,7 @@
 - Implement Haystack metamodel support ([#68](https://github.com/monocle2ai/monocle/pull/68))
 
 ## Version 0.2.0 (2024-12-05)
+
 
 ## 0.2.0 (Oct 22, 2024)
 
