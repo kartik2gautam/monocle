@@ -76,19 +76,6 @@ jobs:
       # rejected by pypi (e.g "3 - Beta"). This would cause a failure during the
       # middle of the package upload causing the action to fail, and certain packages
       # might have already been updated, this would be bad.
-      - name: Publish to TestPyPI
-        env:
-          TWINE_USERNAME: '__token__'
-          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_TOKEN }}
-        run: |
-          twine upload --repository testpypi --skip-existing --verbose dist/*
-
-      - name: Publish to PyPI
-        env:
-          TWINE_USERNAME: '__token__'
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-        run: |
-          twine upload --skip-existing --verbose dist/*
 
       - name: Generate release notes
         env:
