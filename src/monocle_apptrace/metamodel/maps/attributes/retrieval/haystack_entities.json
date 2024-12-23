@@ -5,22 +5,26 @@
       {
         "_comment": "vector store name and type",
         "attribute": "name",
-        "accessor": "lambda instance,args: instance.__dict__.get(\"document_store\").__class__.__name__"
+         "accessor": "lambda arguments: resolve_from_alias(arguments['instance'].__dict__, ['document_store', '_document_store']).__class__.__name__"
       },
       {
         "attribute": "type",
-        "accessor": "lambda instance,args: 'vectorstore.'+instance.__dict__.get(\"document_store\").__class__.__name__"
+        "accessor": "lambda arguments: 'vectorstore.'+resolve_from_alias(arguments['instance'].__dict__, ['document_store', '_document_store']).__class__.__name__"
+      },
+      {
+        "attribute": "deployment",
+        "accessor": "lambda arguments: get_vectorstore_deployment(resolve_from_alias(arguments['instance'].__dict__, ['document_store', '_document_store']).__dict__)"
       }
     ],
     [
       {
         "_comment": "embedding model name and type",
         "attribute": "name",
-        "accessor": "lambda instance,args: get_embedding_model()"
+        "accessor": "lambda arguments: get_embedding_model()"
       },
       {
         "attribute": "type",
-        "accessor": "lambda instance ,args: 'model.embedding.'+get_embedding_model()"
+        "accessor": "lambda arguments: 'model.embedding.'+get_embedding_model()"
       }
     ]
   ]

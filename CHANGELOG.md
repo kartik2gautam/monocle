@@ -1,4 +1,6 @@
+
 ## Version 1.29.0/0.50b0 (2024-11-11)
+
 ## 0.2.0 (Oct 22, 2024)
 
 - Ndjson format for S3 and Blob exporters ([#61](https://github.com/monocle2ai/monocle/pull/61))
